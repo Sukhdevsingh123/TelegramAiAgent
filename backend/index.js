@@ -1,10 +1,13 @@
 
 
 require("dotenv").config();
+const fs = require("fs");
 const { saveTransaction, fetchUserHistory } = require("./models/database");
 const { Telegraf, Markup } = require("telegraf");
 const { ethers } = require("ethers");
 const OpenAI = require("openai");
+
+const imagePath = "./assets/bot.jpeg";
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const SONIC_RPC_URL = process.env.SONIC_RPC_URL;
@@ -22,7 +25,7 @@ let awaitingPrivateKey = {};
 
 bot.telegram.sendPhoto(
     process.env.ADMIN_ID,
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiz0GagK6beE_7TjzvZ2cdfCmg66_nFJ3rIA&s",
+    { source: fs.createReadStream(imagePath) },
     {
         caption: `🚀 <b><u><i>WELCOME TO SONIC AI BLOCKCHAIN ASSISTANT!</i></u></b>\n\n` +
             `🤖 <b>I'm Sonic AI</b>, your personal blockchain assistant! Here's what I can do:\n\n` +
